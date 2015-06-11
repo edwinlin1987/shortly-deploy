@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var db = require('../config');
+var crypto = require('crypto');
 
 var Schema = mongoose.Schema;
 
@@ -15,6 +16,13 @@ var linkSchema = new Schema({
   updated_at: Date
 });
 
+linkSchema.methods.shorten = function(string, callback){
+  var shasum = crypto.createHash('sha1');
+  shasum.update(model.get('url'));
+  model.set('code', shasum.digest('hex').slice(0, 5));
+};
+
+linkSchema.on('init', )
 var Link = db.model('Link', linkSchema);
 module.exports = Link;
 

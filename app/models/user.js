@@ -12,5 +12,13 @@ var userSchema = new Schema({
   updated_at: Date
 });
 
+userSchema.methods.comparePassword = function (string, callback) {
+  var match = false;
+  if ( string === this.password ){
+    match = true;
+  }
+  callback(match);
+};
+
 var User = db.model('User', userSchema);
 module.exports = User;
