@@ -16,13 +16,12 @@ var linkSchema = new Schema({
   updated_at: Date
 });
 
-linkSchema.methods.shorten = function(string, callback){
+linkSchema.methods.shorten = function(){
   var shasum = crypto.createHash('sha1');
-  shasum.update(model.get('url'));
-  model.set('code', shasum.digest('hex').slice(0, 5));
+  shasum.update(this.url);
+  this.code = shasum.digest('hex').slice(0, 5);
 };
 
-linkSchema.on('init', )
 var Link = db.model('Link', linkSchema);
 module.exports = Link;
 
