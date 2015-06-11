@@ -1,45 +1,89 @@
-var Bookshelf = require('bookshelf');
-var path = require('path');
+var mongoose = require('mongoose');
 
-var db = Bookshelf.initialize({
-  client: 'sqlite3',
-  connection: {
-    host: '127.0.0.1',
-    user: 'your_database_user',
-    password: 'password',
-    database: 'shortlydb',
-    charset: 'utf8',
-    filename: path.join(__dirname, '../db/shortly.sqlite')
-  }
-});
-
-db.knex.schema.hasTable('urls').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('urls', function (link) {
-      link.increments('id').primary();
-      link.string('url', 255);
-      link.string('base_url', 255);
-      link.string('code', 100);
-      link.string('title', 255);
-      link.integer('visits');
-      link.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
-
-db.knex.schema.hasTable('users').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('users', function (user) {
-      user.increments('id').primary();
-      user.string('username', 100).unique();
-      user.string('password', 100);
-      user.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose;
 
 module.exports = db;
+
+// var dog = function () {
+//   var userSchema = mongoose.Schema({
+//     username: String,
+//     password: String
+//   });
+
+//   var User = mongoose.model('User', userSchema);
+
+//   var first = new User({ name: 'bob'});
+
+//   console.log(first.name);
+
+//   first.save(function( err, user) {
+//     if(err) { return console.error(err);}
+//     console.log(user.name);
+//   });
+
+//   User.find(function(err, users) {
+//     if (err) { return console.err(err);}
+//     console.log(users);
+//   });
+// };
+
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function(callback) {
+
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// var server = new mongodb.Server("127.0.0.1", 27017, {});
+
+// var client = new mongodb.Db('test',server);
+
+// client.open(function(err, p_client) {
+//   console.log('connected to mongodb!');
+
+//   client.createCollection("demo-collection", function(err, collection) {
+//     console.log("Created collection");
+
+//     var doc = {name: "Jean Valjean", password: "12345"};
+
+//     collection.insert( doc, function(err,docs) {
+//       console.log('inserted document.');
+//       client.close();
+//     });
+//   });
+
+
+// });
+
+// client
+
+// module.exports = client;

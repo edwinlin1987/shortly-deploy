@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     clean: ["public/dist"],
 
     jshint: {
-      files: [ '**/*.js'
+      files: [ 'public/**/*.js'
         // Add filespec list here
       ],
       options: {
@@ -112,6 +112,7 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
+    'jshint',
     'mochaTest'
   ]);
 
@@ -125,15 +126,15 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
-      grunt.task.run(['deploy']);
+      grunt.task.run(['shell:prodServer']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
   grunt.registerTask('deploy', [
-    'build',
-    'shell:prodServer'
+    'test',
+    'upload'
     // add your deploy tasks here
   ]);
 
